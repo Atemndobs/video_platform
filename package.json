@@ -1,0 +1,22 @@
+{
+  "name": "atem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/encore production",
+    "watch": "./node_modules/.bin/encore dev --watch ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.28.2"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
+}

@@ -1,13 +1,45 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: lazy
+            form_login:
+                # thr route name the the login form submits to
+                check_path: login
+                # when the user tries to access a protested page, they are redirected here
+                login_path: login
+                #secure the login form against CSRF
+                csrf_token_generator: security.csrf.token_manager
+                #the page users are redirected to when there is no previous page stored in the session
+                #(for example when the users access directly to the login page)
+                default_target_path: admin_main_page
+                username_parameter: _email
+
+            logout:
+                #the route name that the user can use to logout
+                path: logout
+                #the name of the route to redirect to after logging in
+                target: main_page
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 #1 week in seconds
+                path: /
+                #always_remember_me: true
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -18,5 +50,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin/su, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
+
+
