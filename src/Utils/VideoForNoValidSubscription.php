@@ -17,9 +17,10 @@ class VideoForNoValidSubscription
         $user = $security->getUser();
 
 
+
         if ($user && $user->getSubscription() != null){
             $payment_status = $user->getSubscription()->getPaymentStatus();
-            $valid = new \DateTime() < $user->getSubscription()->getValidTo();
+            $valid = new \Datetime()  <  $user->getSubscription()->getValidTo() ;
             if ($payment_status != null && $valid){
                 $this->isSubscriptionValid = true;
             }
@@ -28,6 +29,9 @@ class VideoForNoValidSubscription
 
     public function check()
     {
+
+
+
         if ($this->isSubscriptionValid){
             return null;
         }
@@ -35,6 +39,7 @@ class VideoForNoValidSubscription
             static $video = Video::videoForNotLoggedInOrNoMembers;
             return $video;
         }
+
     }
 
 }

@@ -52,17 +52,8 @@ class FrontController extends AbstractController
         return $this->render('front/video_list.html.twig', [
             'subcategories' => $categories,
             'videos' => $videos,
-            'video_no_members'=> $video_no_members->check()
+            'video_no_members' => $video_no_members->check()
         ]);
-   }
-
-
-    /**
-     * @Route("/payment", name="payment")
-     */
-    public function payment()
-    {
-        return $this->render('front/payment.html.twig');
     }
 
 
@@ -70,6 +61,7 @@ class FrontController extends AbstractController
      * @Route("/video-details/{video}", name="video_details")
      * @param VideoRepository $videoRepository
      * @param $video
+     * @param VideoForNoValidSubscription $video_no_members
      * @return Response
      */
     public function videoDetails(VideoRepository $videoRepository, $video, VideoForNoValidSubscription $video_no_members)
@@ -86,11 +78,11 @@ class FrontController extends AbstractController
      * @return RedirectResponse
      * @Route("/new-comment/{video}", methods={"POST"}, name="new_comment")
      */
-    public function newComment( Video $video, Request $request)
+    public function newComment(Video $video, Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        if (!empty(trim($request->request->get('comment')))){
+        if (!empty(trim($request->request->get('comment')))) {
             $comment = new  Comment();
             $comment->setContent($request->request->get('comment'));
             $comment->setUser($this->getUser());
@@ -107,29 +99,29 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/search_results/{page}", name="search_results", methods={"GET"}, defaults={"page" : "1"})
+     * @Route("/search-results/{page}", name="search_results", methods={"GET"}, defaults={"page" : "1"})
      * @param $page
      * @param Request $request
+     * @param VideoForNoValidSubscription $video_no_members
      * @return Response
      */
     public function searchResults($page, Request $request, VideoForNoValidSubscription $video_no_members)
     {
+
         $videos = null;
         $query = null;
 
-        if ($query = $request->get('query'))
-        {
+        if ($query = $request->get('query')) {
             $videos = $this->getDoctrine()
                 ->getRepository(Video::class)
                 ->findByTitle($query, $page, $request->get('sortby'));
 
             if (!$videos->getItems()) $videos = null;
         }
-
         return $this->render('front/search_results.html.twig', [
             'videos' => $videos,
             'query' => $query,
-            'video_no_members' => $video_no_members,
+            'video_no_members' => $video_no_members->check(),
         ]);
     }
 
@@ -145,7 +137,7 @@ class FrontController extends AbstractController
     public function toggleLikesAjax(Video $video, Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
-        switch($request->get('_route')){
+        switch ($request->get('_route')) {
             case 'like_video':
                 $result = $this->likeVideo($video);
                 break;
@@ -156,20 +148,19 @@ class FrontController extends AbstractController
                 $result = $this->unlikeVideo($video);
                 break;
             case 'undo_dislike_video':
-                $result=$this->undoDislikeVideo($video);
+                $result = $this->undoDislikeVideo($video);
                 break;
         }
 
-        return $this->json(['action' =>  $result, 'id'=> $video->getId()]);
+        return $this->json(['action' => $result, 'id' => $video->getId()]);
     }
-
 
 
     public function mainCategories()
     {
         $categories = $this->getDoctrine()
             ->getRepository(Category::class)
-            ->findBy(['parent' =>null], ['name'=>'ASC']);
+            ->findBy(['parent' => null], ['name' => 'ASC']);
         return $this->render('front/_main_categories.html.twig', [
             'categories' => $categories
         ]);

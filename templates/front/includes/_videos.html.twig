@@ -1,8 +1,9 @@
 
 <div class="row">
-    {% for  video in videos %}
+    {% for video in videos %}
+
         {% if video_no_members is not null %}
-            {% set videoid = 'http://player.vimeo.com/video/' ~ video_no_members %}
+            {% set videoid = 'https://player.vimeo.com/video/' ~ video_no_members%}
         {% else %}
             {% set videoid = video.vimeoid %}
         {% endif %}
@@ -13,9 +14,6 @@
                     <iframe class="" src="{{ videoid }}" frameborder="0"
                             allowfullscreen></iframe>
                 </div>
-
-
-
 
                 <div class="card-body">
                     <h3>{{ video.getTitle()}}</h3>
