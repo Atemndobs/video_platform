@@ -21,31 +21,25 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class MainController extends AbstractController
 {
-    public function getAllCategories(CategoryTreeAdminOptionList $categories, $editedCategory = null)
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $categories->getCategoryList($categories->buildTree());
-
-        return $this->render('admin/_all_categories.html.twig', [
-            'categories'=> $categories,
-            'editedCategory'  => $editedCategory,
-        ]);
-    }
-
 
     /**
      * @Route("/videos", name="videos")
+     * @param CategoryTreeAdminOptionList $categories
+     * @return Response
      */
-    public function videos()
+    public function videos(CategoryTreeAdminOptionList $categories)
     {
         if ($this->isGranted('ROLE_ADMIN')){
-            $videos = $this->getDoctrine()->getRepository(Video::class)->findAll();
+            $categories->getCategoryList($categories->buildTree());
+            $videos = $this->getDoctrine()->getRepository(Video::class)->findBy([],['title'=>'ASC'] );
         }
         else{
+            $categories = null;
             $videos = $this->getUser()->getLikedVideos();
         }
         return $this->render('admin/videos.html.twig', [
             'videos' => $videos,
+            'categories'=> $categories,
         ]);
     }
 
@@ -64,7 +58,6 @@ class MainController extends AbstractController
         $is_invalid = null;
 
         if ($form->isSubmitted() && $form->isValid()){
-           // exit('valid');
             $entityManager = $this->getDoctrine()->getManager();
             $user->setName($request->request->get('user')['name']);
             $user->setLastName($request->request->get('user')['last_name']);
@@ -89,7 +82,7 @@ class MainController extends AbstractController
 
             'subscription' => $this->getUser()->getSubscription(),
             'form' => $form->createView(),
-            'is_valid'=> $is_invalid,
+            'is_invalid'=> $is_invalid,
         ]);
     }
 

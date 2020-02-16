@@ -8,6 +8,7 @@ rm src/Migrations/*.php
 bin/console make:migration
 bin/console doctrine:migrations:migrate -n -q
 bin/console doctrine:fixtures:load -n -q
+bin/console cache:clear
 
 fi
 

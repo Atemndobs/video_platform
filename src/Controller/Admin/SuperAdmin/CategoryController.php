@@ -7,6 +7,7 @@ namespace App\Controller\Admin\SuperAdmin;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Utils\CategoryTreeAdminList;
+use App\Utils\CategoryTreeAdminOptionList;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,12 +112,27 @@ class CategoryController extends AbstractController
             $is_invalid = ' is-invalid';
         }
 
-        dump($categories->categorylist);
-        return $this->render('admin/categories.html.twig', [
+           return $this->render('admin/categories.html.twig', [
             'categories'=> $categories->categorylist,
             'form' =>$form->createView(),
             'is_invalid' => $is_invalid,
 
+        ]);
+    }
+
+    /**
+     * @param CategoryTreeAdminOptionList $categories
+     * @param null $editedCategory
+     * @return Response
+     */
+    public function getAllCategories(CategoryTreeAdminOptionList $categories, $editedCategory = null)
+    {
+      //  $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $categories->getCategoryList($categories->buildTree());
+
+        return $this->render('admin/_all_categories.html.twig', [
+            'categories'=> $categories,
+            'editedCategory'  => $editedCategory,
         ]);
     }
 

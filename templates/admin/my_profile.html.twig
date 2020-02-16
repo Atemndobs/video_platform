@@ -1,13 +1,7 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block mainadmin %}
-    {% for label, messages in app.flashes %}
-    {% for message in messages %}
-     <div class="alert alert-{{ label }}" role="alert">
-         {{ message }}
-     </div>
-    {% endfor %}
-    {% endfor %}
+
 <h2>My profile <small><a onclick="return confirm('Are you sure?');" href="{{ path('delete_account') }}">delete account</a></small></h2>
 {#    {% if not is_granted('ROLE_ADMIN') %}
 <p class="text-left">My plan - Pro. <a onclick="return confirm('Are you sure? This can not be undone. Remember also to cancel payment in your PayPal account.');"
@@ -38,7 +32,7 @@
 
 
 {#<form class="mt-5" method="POST" action="#">#}
-    {{ form_start(form, {'attr':{'novalidate':'novalidate'}}) }}
+    {{ form_start(form) }}
     {% if is_granted('ROLE_ADMIN') %}
     <div class="form-group">
         <label for="user_vimeo_api_key">Vimeo API key</label>
@@ -51,35 +45,35 @@
     {% endif %}
     <div class="form-group">
         <label for="user_name">Name</label>
-        {{ form_widget(form.name, {'attr':{class:'is_invalid'}}) }}
+        {{ form_widget(form.name, {'attr':{'class':is_invalid}}) }}
         <div class="invalid-feedback">
             {{ form_errors(form.name) }}
         </div>
     </div>
     <div class="form-group">
         <label for="user_lastname">Last name</label>
-        {{ form_widget(form.last_name, {'attr':{class:'is_invalid'}}) }}
+        {{ form_widget(form.last_name, {'attr':{'class':is_invalid}}) }}
         <div class="invalid-feedback">
             {{ form_errors(form.last_name) }}
         </div>
     </div>
     <div class="form-group">
         <label for="user_email">Email address</label>
-        {{ form_widget(form.email, {'attr':{class:'is_invalid'}}) }}
+        {{ form_widget(form.email, {'attr':{'class':is_invalid}}) }}
         <div class="invalid-feedback">
             {{ form_errors(form.email) }}
         </div>
     </div>
     <div class="form-group">
         <label for="user_password_first">Password</label>
-        {{ form_widget(form.password.first, {'attr':{class:'is_invalid'}}) }}
+        {{ form_widget(form.password.first, {'attr':{'class':is_invalid, 'required':'required'}}) }}
         <div class="invalid-feedback">
             {{ form_errors(form.password.first) }}
         </div>
     </div>
     <div class="form-group">
         <label for="user_password_second">Confirm password</label>
-        {{ form_widget(form.password.second, {'attr':{class:'is_invalid'}}) }}
+        {{ form_widget(form.password.second, {'attr':{'class':is_invalid, 'required':'required'}}) }}
         <div class="invalid-feedback">
             {{ form_errors(form.password.second) }}
         </div>

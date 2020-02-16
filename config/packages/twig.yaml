@@ -1,8 +1,11 @@
 twig:
-    default_path: '%kernel.project_dir%/templates'
+  globals:
+    upload_route_name: "upload_video_locally"
 
-    debug: '%kernel.debug%'
+  default_path: '%kernel.project_dir%/templates'
 
-    strict_variables: '%kernel.debug%'
+  debug: '%kernel.debug%'
 
-    form_themes: ['bootstrap_4_layout.html.twig']
+  strict_variables: '%kernel.debug%'
+
+  form_themes: ['bootstrap_4_layout.html.twig']

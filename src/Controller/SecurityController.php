@@ -93,13 +93,6 @@ class SecurityController extends AbstractController
                 }
             }
 
-
-/*
-                if ($plan == Subscription::getPlanDataNameByIndex(0)) {
-                    $subscription->setFreePlanUsed(true);
-                    $subscription->setPaymentStatus('paid');
-                }*/
-
             $user->setSubscription($subscription);
 
             $entityManager->persist($user);

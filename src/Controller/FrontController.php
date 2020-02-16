@@ -9,6 +9,7 @@ use App\Entity\Video;
 use App\Repository\VideoRepository;
 use App\Utils\CategoryTreeFrontPage;
 use App\Utils\VideoForNoValidSubscription;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -165,5 +166,23 @@ class FrontController extends AbstractController
             'categories' => $categories
         ]);
 
+    }
+
+    /**
+     * @Route("/delete-comment/{comment}", name="delete_comment")
+     * @Security("user.getId() == comment.getUser().getId()")
+     * @param Comment $comment
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function deleteComment(Comment $comment, Request $request)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($comment);
+        $em->flush();
+
+        return $this->redirect($request->headers->get('referer'));
     }
 }
