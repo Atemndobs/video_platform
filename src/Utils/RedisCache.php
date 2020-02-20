@@ -17,6 +17,7 @@ class RedisCache implements CacheInterface
         $this->cache = new TagAwareAdapter(
             new RedisAdapter(RedisAdapter::createConnection('redis://localhost/1'))
         );
+
     }
 
 }
