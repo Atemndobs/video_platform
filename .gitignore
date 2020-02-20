@@ -12,4 +12,5 @@
 .phpunit
 .phpunit.result.cache
 /phpunit.xml
+/heroku/
 ###< symfony/phpunit-bridge ###

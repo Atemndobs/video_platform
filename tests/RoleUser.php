@@ -9,8 +9,17 @@ trait RoleUser
     private $client ;
     private $entityManager;
 
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
+        self::bootKernel();
+
+        $container = self::$kernel->getContainer();
+
+        $container->self::$container->get('App\Utils\Interfaces\CacheInterface');
+        $this->cache->clear();
+
 
         $this->client = static::createClient([], [
             'PHP_AUTH_USER' => 'jd@symf4.loc',
@@ -21,9 +30,10 @@ trait RoleUser
 
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         parent::tearDown();
+        $this->cache->clear();
 
         $this->entityManager->close();
         $this->entityManager = null; // avoid memory leak

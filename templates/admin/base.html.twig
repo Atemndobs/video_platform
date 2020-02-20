@@ -7,14 +7,13 @@
 {% block title %}Awesome videos - admin panel{% endblock %}
 
 
-{% block menu  %}
+{% block menu %}
 
 {% endblock %}
 
     {% block main %}
 <body class="text-center">
 <div class="container-fluid">
-
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <h5 class="my-0 mr-md-auto font-weight-normal">Awesome Videos</h5>
         <a class="nav-link active" href="{{ path('main_page') }}"> Go to public site</a>
@@ -31,41 +30,40 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('admin_main_page') }}">
                             <span data-feather="file"></span>
-                            My profile
+                            {% trans %}My profile{% endtrans %}
                         </a>
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('categories') }}">
-                            <span data-feather="file"></span>
-                            Categories
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('categories') }}">
+                                <span data-feather="file"></span>
+                                 {% trans %}Categories{% endtrans %}
+                            </a>
+                        </li>
                     {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('videos') }}">
                             <span data-feather="shopping-cart"></span>
-                            Videos
+                             {% trans %}Videos{% endtrans %}
                         </a>
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path(upload_route_name) }}">
-                            <span data-feather="shopping-cart"></span>
-                            Upload a video
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path(upload_route_name) }}">
+                                <span data-feather="shopping-cart"></span>
+                                 {% trans %}Upload a video{% endtrans %}
+                            </a>
+                        </li>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('users') }}">
-                            <span data-feather="users"></span>
-                            Users
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('users') }}">
+                                <span data-feather="users"></span>
+                                {% trans %}Users{% endtrans %}
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
-
             </div>
         </nav>
 
@@ -76,7 +74,7 @@
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}" role="alert">
-                        {{ message }}
+                        {{ message|trans }}
                     </div>
                 {% endfor %}
             {% endfor %}
@@ -84,15 +82,16 @@
             {% endblock %}
         </main>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
 
-    {% block footer %} {% endblock %}
+{% block footer %} {% endblock %}
 
 {% block customjavascript %}
     <script>
         $('input[type="file"]').change(function (e) {
             var fileName = e.target.files[0].name;
-           /* console.log(e.target.files[0]);*/
+            /* console.log(e.target.files[0]);*/
             $('.custom-file-label').html(fileName);
         });
     </script>

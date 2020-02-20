@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * @Route("/admin")
  */
@@ -47,9 +47,10 @@ class MainController extends AbstractController
      * @Route("/", name="admin_main_page")
      * @param Request $request
      * @param UserPasswordEncoderInterface $password_encoder
+     * @param TranslatorInterface $translator
      * @return Response
      */
-    public function index(Request $request, UserPasswordEncoderInterface $password_encoder)
+    public function index(Request $request, UserPasswordEncoderInterface $password_encoder, TranslatorInterface $translator)
     {
         $user = $this->getUser();
 
@@ -68,6 +69,8 @@ class MainController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+           // $translated = $translator->trans('Your changes were saved!');
 
             $this->addFlash(
                 'success',

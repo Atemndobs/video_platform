@@ -46,10 +46,10 @@ class CategoryTreeAdminList extends CategoryTreeAbstract
 
         foreach ($categories_array as $value){
 
-            $url_edit = $this->urlGenerator->generate('edit_category',
+            $url_edit = $this->urlGenerator->generate('edit_category.en',    //note, en has been added because of translation in urls
                 ['id' => $value['id']]
             );
-            $url_delete = $this->urlGenerator->generate('delete_category',
+            $url_delete = $this->urlGenerator->generate('delete_category.en',
                 ['id' => $value['id']]
             );
 

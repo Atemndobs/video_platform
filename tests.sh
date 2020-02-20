@@ -22,3 +22,4 @@ fi
 
 # /bin/bash tests.sh tests -db    (for cleanig up db and resetting with values from fixtures)
 # /bin/bash tests.sh tests        (for running the tests)
+# /bin/console swiftmailer:spool:send

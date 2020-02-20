@@ -9,7 +9,12 @@
   "scripts": {
     "start": "./node_modules/.bin/encore production",
     "watch": "./node_modules/.bin/encore dev --watch ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "swiftmailer:spool:send": "bin/console swiftmailer:spool:send",
+    "db rest & run tests" : "/bin/bash tests.sh tests -db ",
+    "db:reset:fixtures" : "/bin/bash dbFixtures.sh",
+    "run all tests": "/bin/bash tests.sh tests",
+    "redis clear cache" :  "redis-cli FLUSHALL "
   },
   "author": "",
   "license": "ISC",
