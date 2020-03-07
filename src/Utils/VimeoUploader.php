@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Security;
 
 class VimeoUploader implements UploaderInterface
 {
-    private $vimeoToken = '83be82050ad3c3b682d97b276ad9e202';
+    private $vimeoToken = '91547d921a8fea84c4333bae85a82808';
 
     public function __construct(Security $security)
     {

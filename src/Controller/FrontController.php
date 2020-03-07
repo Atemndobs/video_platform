@@ -45,9 +45,6 @@ class FrontController extends AbstractController
                               VideoForNoValidSubscription $video_no_members, CacheInterface $cache)
     {
 
-        var_dump(phpinfo());
-
-
         $cache = $cache->cache;
         $videos_list = $cache->getItem('video_list'.$id.$page.$request->get('sortby'));
 
@@ -101,6 +98,7 @@ class FrontController extends AbstractController
      */
     public function newComment(Video $video, Request $request)
     {
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         if (!empty(trim($request->request->get('comment')))) {
