@@ -1,4 +1,4 @@
-**How To Install Redis**
+**Install Redis**
 
 <br>`sudo apt-get install redis-server` </p>
 `sudo apt-get install php-redis`
