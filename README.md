@@ -1,11 +1,23 @@
-**Install Redis**
+A website for hosting and sharing videos with possibility to like comment. createy in symfony 5
 
-<br>`sudo apt-get install redis-server` </p>
-`sudo apt-get install php-redis`
+## Try it out here:  [atem-video](https://atem-video.herokuapp.com/)
+or here: https://atem-video.herokuapp.com/
 
-`sudo nano /etc/redis/redis.conf` </p>
-           <p> maxmemory 128mb  </p>
-            maxmemory-policy allkeys-lru
-            
-`sudo systemctl enable redis-server.service` </p>
-`sudo service apache2 restart`
+
+## Getting started.
+
+   - clone the repository
+
+    $ cd video_platform
+
+#### Install all dependencies
+
+    ##### `composer intall`
+
+ #### start 
+
+    ##### `symfony serve`
+
+
+#### create account , and login. :
+
