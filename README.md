@@ -19,5 +19,3 @@ or here: https://atem-video.herokuapp.com/
     ##### `symfony serve`
 
 
-#### create account , and login. :
-
